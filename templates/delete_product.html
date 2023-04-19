@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body onload="getProduct()">
+    <h1>Delete Product</h1>
+    <div>
+        Id: <span id="product_id">{{ id }}</span><br>
+        Name: <span id="product_name"></span><br>
+        Price: <span id="product_price" /></span><br>
+        <button onclick="deleteProduct()">Submit</button>
+    </div>
+    <div id="message"></div>
+    <div><a href="/products">Products</a></div>
+
+    <script>
+        function getProduct() {
+            let id = document.getElementById("product_id").innerText
+            console.log(id)
+            fetch('http://localhost:5000/api/product/' + id)
+            .then(response => response.json()) 
+            .then(data => { 
+                console.log(data)
+                let product = data['product']
+                document.getElementById("product_name").innerText = product['name']
+                document.getElementById("product_price").innerText = product['price']
+            })
+        }
+
+        function deleteProduct() {
+            let id = document.getElementById("product_id").innerText
+
+            fetch('http://localhost:5000/api/product', {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"id": id})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").innerHTML = "Product " + name + " deleted"
+            })
+        }
+    </script>
+</body>
+</html>

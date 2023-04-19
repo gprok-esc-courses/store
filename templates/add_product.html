@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Add Product</h1>
+    <div>
+        Name: <input type="text" id="product_name" /><br>
+        Price: <input type="text" id="product_price" /><br>
+        <button onclick="addProduct()">Submit</button>
+    </div>
+    <div id="message"></div>
+    <div><a href="/products">Products</a></div>
+
+    <script>
+        function addProduct() {
+            let name = document.getElementById("product_name").value
+            let price = document.getElementById("product_price").value
+            if(name.length == 0 || price.length == 0) {
+                document.getElementById("message").innerHTML = "Please fill all fields"
+                return
+            }
+            fetch('http://localhost:5000/api/product', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"name": name, "price": price})
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").innerHTML = "Product " + name + " added"
+                document.getElementById("product_name").value = ''
+                document.getElementById("product_price").value = ''
+            })
+        }
+    </script>
+</body>
+</html>

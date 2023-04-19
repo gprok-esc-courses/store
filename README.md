@@ -2,7 +2,7 @@
 
 ## How to use:
 
-1. Clone the project from GitHub: 
+1. Clone the project from GitHub
 1. cd into the store directory
 1. Create virtual environment: ```python -m venv venv```
 1. Activate the virtual environment: (Win) ```venv\Scripts\activate``` (Mac/Linux) ```source venv/bin/activate```
